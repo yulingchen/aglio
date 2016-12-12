@@ -864,6 +864,7 @@ nav .resource-group{
 
 
 
+
 // 总体背景颜色值
 @base-bg-color: #eaeff3;
 
@@ -959,6 +960,9 @@ nav {
     ul a:hover{
         border-left-color: @nav-header-bg-color
     }
+    ul ul a{
+        padding-left:12px;
+    }
     .resource-group {
         border-radius: 0;
         .heading{
@@ -981,7 +985,10 @@ nav {
 }
 
 .schema-container {
-    color: #666;
+    color: #333;
+    .type{
+        color: #999
+    }
 }
 
 

@@ -196,16 +196,16 @@ function objParse(test,i,parentid){
              }
              
              else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="string"){
-               paramType = "array<string>"
+               paramType = "array(string)"
              }
              else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="number"){
-               paramType = "array<number>"
+               paramType = "array(number)"
              }
              else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="boolean"){
-               paramType = "array<boolean>"
+               paramType = "array(boolean)"
              }
               else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object"){
-               paramType = "array<object>"
+               paramType = "array(object)"
              }
              else {
               paramType = objAnalysis[obj].type
@@ -320,13 +320,17 @@ function init() {
       }
       var divContainer = [];
       result.map(function(item){
-       var str = '--  ' + item.name +'  '+ item.type +'('+item.description+')'
+        console.log('item.type:',item.type)
+       var str = '-' + item.name +'<span class="type"> '+ item.type +'</span>'
+       if(item.description){
+        str = '-' + item.name +'<span class="type"> '+ item.type +'('+item.description+')'+'</span>'
+      }
        var clName = 'params-level-'+item.level
-       var style = 'padding-left:' + 15 * item.level + 'px;'
+       var style = 'padding-left:' + 15 * (item.level+1) + 'px;'
        divContainer.push('<div class='+clName+' style='+style+'>'+str+'</div>')
       })
       divContainer = divContainer.join('');
-      item.innerHTML = divContainer;
+      item.innerHTML = '{' + divContainer + '}';
       // console.log('result',result,divContainer)
     })
 

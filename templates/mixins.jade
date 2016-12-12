@@ -47,9 +47,9 @@ mixin Nav()
                     each resource in resourceGroup.resources || []
                       li
                           if !self.condenseNav || (resource.actions.length != 1)
-                              a(href=resource.elementLink)!= resource.name || 'Resource'
+                              //- a(href=resource.elementLink)!= resource.name || 'Resource'
                                 
-                              ul: each action in resource.actions || []
+                              ul.resource-container: each action in resource.actions || []
                                   li: a(href=action.elementLink)
                                     +Badge(action.method)
                                     != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
@@ -130,14 +130,14 @@ mixin RequestResponseBody(request, collapse, showBlank)
                         if index < request.headers.length - 1
                           br
                 div(style="height: 1px;")
-            if request.body
-                h5 Body
-                pre: code
-                    != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
-                div(style="height: 1px;")
+            //- if request.body
+            //-     h5 Body
+            //-     pre: code
+            //-         != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
+            //-     div(style="height: 1px;")
             if request.schema
                 h5 Schema
-                pre: code.schema-container  #{request.schema}
+                pre:  code.schema-container  #{request.schema}
                     
                 div(style="height: 1px;")
             if !request.hasContent
