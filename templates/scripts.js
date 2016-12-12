@@ -173,6 +173,101 @@ function autoCollapse() {
   }
 }
 
+
+
+var result = [];
+var paramId = 0;
+ // 对导入的json进行处理
+function objParse(test,i,parentid){
+
+   var objAnalysis =  test;
+   // 对象的解析
+    for (var obj in objAnalysis) {
+          if (objAnalysis.hasOwnProperty(obj)) {
+
+             
+             var paramType ;
+
+             // console.log('obj',obj,objAnalysis[obj].type)
+
+            
+             if (objAnalysis[obj].type === "object"){
+              paramType = "object"
+             }
+             
+             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="string"){
+               paramType = "array<string>"
+             }
+             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="number"){
+               paramType = "array<number>"
+             }
+             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="boolean"){
+               paramType = "array<boolean>"
+             }
+              else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object"){
+               paramType = "array<object>"
+             }
+             else {
+              paramType = objAnalysis[obj].type
+             }
+              paramId += 1;
+              // 如果为对象或者为array<object>要接着递归解析
+              if (
+                  (objAnalysis[obj].type === "object" && objAnalysis[obj].properties)
+                  || 
+                  (objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object" && objAnalysis[obj].items.properties)
+              ) {
+                 
+                  var defaultParamsResponses = {
+                        name:obj,          // 数据的变量名称
+                        type: paramType,       // 数据的类型
+                        required: objAnalysis[obj].required ? objAnalysis[obj].required :false,    // 是否必填
+                        description: objAnalysis[obj].description ? objAnalysis[obj].description :null, // 数据的描述
+                        default: objAnalysis[obj].default ? objAnalysis[obj].default :null,     // 默认值
+                        extend: true,  // 是否可以扩展(是否可以有子属性)
+                        isfold: true,          // 是否已经展开，前提条件可以扩展，默认true
+                        level: i,        // 属于哪个层级，不同的层级间距，颜色不一致
+                        index:  paramId,     // 每一行都有自己的下标
+                        indexArr: parentid?parentid:null,  // 每一行所属的父级的下标
+                        isShow: true ,  // 自身这一行是否显示
+
+                  }
+                
+                  result.push(defaultParamsResponses);
+                  if (objAnalysis[obj].properties) {
+                         objParse(objAnalysis[obj].properties,i+1,paramId);
+                  }else{
+                      objParse(objAnalysis[obj].items.properties,i+1,paramId);
+                  }
+             
+
+              }else{
+
+                      var defaultParamsResponsesnoson = {
+                            name:obj,          // 数据的变量名称
+                            type: paramType,       // 数据的类型
+                            required: objAnalysis[obj].required ? objAnalysis[obj].required :false,    // 是否必填
+                            description: objAnalysis[obj].description ? objAnalysis[obj].description :null, // 数据的描述
+                            default: objAnalysis[obj].default ? objAnalysis[obj].default :null,     // 默认值
+                            extend: false,     // 是否可以扩展(是否可以有子属性)
+                            isfold: true,          // 是否已经展开，前提条件可以扩展，默认true
+                            level: i,        // 属于哪个层级，不同的层级间距，颜色不一致
+                            index:  paramId,     // 每一行都有自己的下标
+                            indexArr: parentid?parentid:null,  // 每一行所属的父级的下标
+                            isShow: true ,  // 自身这一行是否显示
+                      }
+                      if (objAnalysis[obj].type === "object" || (objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object")) {
+                        defaultParamsResponsesnoson.extend = true;
+                      }
+                      if (objAnalysis[obj].type) {
+                        result.push(defaultParamsResponsesnoson)
+                      }
+              }
+          }
+     }
+};
+
+
 /*
   Initialize the interactive functionality of the page.
 */
@@ -211,10 +306,39 @@ function init() {
         // Show all by default
         toggleCollapseNav({target: navItems[i].children[0]});
     }
+
+    var arr = Array.prototype.slice.call(document.querySelectorAll('.schema-container'))
+    arr.map(function(item){
+     
+      // console.log('json',JSON.parse(item.innerHTML))
+      result = [];
+      var obj = JSON.parse(item.innerHTML);
+      if(obj.properties){
+        objParse(obj.properties,0);
+      }else{
+        objParse(obj,0);
+      }
+      var divContainer = [];
+      result.map(function(item){
+       var str = '--  ' + item.name +'  '+ item.type +'('+item.description+')'
+       var clName = 'params-level-'+item.level
+       var style = 'padding-left:' + 15 * item.level + 'px;'
+       divContainer.push('<div class='+clName+' style='+style+'>'+str+'</div>')
+      })
+      divContainer = divContainer.join('');
+      item.innerHTML = divContainer;
+      // console.log('result',result,divContainer)
+    })
+
+   
 }
 
 // Initial call to set up buttons
 init();
+
+
+
+
 
 window.onload = function () {
     autoCollapse();
