@@ -51,7 +51,7 @@ exports.collectPathsSync = (input, includePath) ->
 
 # Get the theme module for a given theme name
 exports.getTheme = (name) ->
-    name = 'olio' if not name or name in LEGACY_TEMPLATES
+    name = 'api' if not name or name in LEGACY_TEMPLATES
     require "aglio-theme-#{name}"
 
 # Render an API Blueprint string using a given template
@@ -72,12 +72,12 @@ exports.render = (input, options, done) ->
     if fs.existsSync options.theme
         console.log "Setting theme to olio and layout to #{options.theme}"
         options.themeLayout = options.theme
-        options.theme = 'olio'
+        options.theme = 'api'
     else if options.theme isnt 'default' and options.theme in LEGACY_TEMPLATES
         variables = options.theme.split('-')[0]
         console.log "Setting theme to olio and variables to #{variables}"
         options.themeVariables = variables
-        options.theme = 'olio'
+        options.theme = 'api'
 
     # Handle custom directive(s)
     input = includeDirective options.includePath, input

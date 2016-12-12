@@ -1,6 +1,6 @@
 {
   "name": "aglio-fork",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "An API Blueprint renderer with theme support",
   "main": "lib/main.js",
   "bin": {
@@ -35,8 +35,7 @@
     "markdown"
   ],
   "dependencies": {
-    "aglio-theme-api": "^1.6.5",
-    "aglio-theme-olio": "^1.6.3",
+    "aglio-theme-api": "^1.6.6",
     "chokidar": "^1.4.1",
     "cli-color": "^1.1.0",
     "pretty-error": "^1.2.0",
