@@ -1,0 +1,1 @@
+aglio --theme-template ./templates/index.jade --theme-full-width --theme-style default --theme-style ./test.less -i api.apib -s
