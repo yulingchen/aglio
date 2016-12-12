@@ -70,12 +70,12 @@ exports.render = (input, options, done) ->
     if options.template then options.theme = options.template
 
     if fs.existsSync options.theme
-        console.log "Setting theme to olio and layout to #{options.theme}"
+        #console.log "Setting theme to olio and layout to #{options.theme}"
         options.themeLayout = options.theme
         options.theme = 'api'
     else if options.theme isnt 'default' and options.theme in LEGACY_TEMPLATES
         variables = options.theme.split('-')[0]
-        console.log "Setting theme to olio and variables to #{variables}"
+        #console.log "Setting theme to olio and variables to #{variables}"
         options.themeVariables = variables
         options.theme = 'api'
 
