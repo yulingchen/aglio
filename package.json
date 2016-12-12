@@ -35,6 +35,7 @@
     "markdown"
   ],
   "dependencies": {
+    "aglio-theme-api": "^1.6.4",
     "aglio-theme-olio": "^1.6.3",
     "chokidar": "^1.4.1",
     "cli-color": "^1.1.0",
