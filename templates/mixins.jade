@@ -3,21 +3,21 @@ mixin Badge(method)
     //- Draw a badge for a given HTTP method
     case method
         when 'GET'
-            span.badge.get get
+            span.badge.get: i.fa.fa-arrow-down
         when 'HEAD'
-            span.badge.head head
+            span.badge.head: i.fa.fa-info-circle
         when 'OPTIONS'
-            span.badge.options options
+            span.badge.options: i.fa.fa-dot-circle-o
         when 'POST'
-            span.badge.post post
+            span.badge.post: i.fa.fa-plus
         when 'PUT'
-            span.badge.put put
+            span.badge.put: i.fa.fa-pencil
         when 'PATCH'
-            span.badge.patch patch
+            span.badge.patch: i.fa.fa-pencil
         when 'DELETE'
-            span.badge.delete delete
+            span.badge.delete: i.fa.fa-times
         default
-            span.badge default
+            span.badge: i.fa.fa-dot-circle-o
 
 mixin Nav()
     //- Draw a navigation bar, which includes links to individual
@@ -38,31 +38,32 @@ mixin Nav()
                 .heading
                   .chevron
                     i.open.fa.fa-angle-down
-                  a(href=resourceGroup.elementLink)!= resourceGroup.name || 'Resource Group'
+                  //- a(href=resourceGroup.elementLink)!= resourceGroup.name || 'Resource Group'
+                  a(data-id=resourceGroup.elementLink)!= resourceGroup.name || 'Resource Group'
                 .collapse-content
                   ul
                     each item in resourceGroup.navItems || []
                       li
-                        a(href=item[1])!= item[0]
+                        a(data-id=item[1])!= item[0]
                     each resource in resourceGroup.resources || []
                       li
                           if !self.condenseNav || (resource.actions.length != 1)
                               //- a(href=resource.elementLink)!= resource.name || 'Resource'
                                 
                               ul.resource-container: each action in resource.actions || []
-                                  li: a(href=action.elementLink)
+                                  li: a(data-id=action.elementLink)
                                     +Badge(action.method)
                                     != action.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
                           else
                               - var action = resource.actions[0]
-                              a(href=action.elementLink)
+                              a(data-id=action.elementLink)
                                   +Badge(action.method)
                                   != action.name || resource.name || action.method + ' ' + (action.attributes && action.attributes.uriTemplate || resource.uriTemplate)
         //- Link to the API hostname, e.g. api.yourcompany.com
         each meta in self.api.metadata || {}
             if meta.name == 'HOST'
                 p(style="text-align: center; word-wrap: break-word;")
-                    a(href=meta.value)= meta.value
+                    a(data-id=meta.value)= meta.value
 
 mixin Parameters(params)
     //- Draw a definition list of parameter names, types, defaults,
@@ -183,7 +184,7 @@ mixin Content()
                         .action(class=action.methodLower, id=action.elementId)
                             h4.action-heading
                                 .name!= action.name
-                                a.method(class=action.methodLower, href=action.elementLink)
+                                a.method(class=action.methodLower, data-id=action.elementLink)
                                     = action.method
                                 code.uri= self.urldec(action.uriTemplate)
                             if action.description

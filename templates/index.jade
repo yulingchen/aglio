@@ -11,8 +11,8 @@ html
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
         style!= self.css
     body.preload
-        div.api-header #{self.api.name}API文档
-        a.text-muted.back-to-top(href='#top')
+        div.api-header #{self.api.name}API文档 
+        a.text-muted.back-to-top(id='gotoTop')
             i.fa.fa-toggle-up
             | &nbsp;Back to top
         div(class=self.fullWidth ? 'container-fluid api-container' : 'container-fluid api-container')

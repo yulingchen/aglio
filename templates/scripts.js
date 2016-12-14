@@ -108,9 +108,11 @@ function toggleCollapseNav(event, force) {
       // Currently showing, so let's hide it, but only if this nav item
       // is already selected. This prevents newly selected items from
       // collapsing in an annoying fashion.
-      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+
+      // 没有用瞄点去掉这些
+      // if (force || window.location.hash && endsWith(event.target.getAttribute('data-id'), window.location.hash)) {
         content.style.maxHeight = '0px';
-      }
+      // }
     } else {
       // Currently hidden, so let's show it
       content.style.maxHeight = inner.offsetHeight + 12 + 'px';
@@ -307,6 +309,7 @@ function init() {
         toggleCollapseNav({target: navItems[i].children[0]});
     }
 
+    // shcema解析显示的修改
     var arr = Array.prototype.slice.call(document.querySelectorAll('.schema-container'))
     arr.map(function(item){
      
@@ -320,20 +323,39 @@ function init() {
       }
       var divContainer = [];
       result.map(function(item){
-        console.log('item.type:',item.type)
-       var str = '-' + item.name +'<span class="type"> '+ item.type +'</span>'
+        // console.log('item.type:',item.type)
+       var str = item.name +'<span class="type"> '+ item.type +'</span>'
        if(item.description){
-        str = '-' + item.name +'<span class="type"> '+ item.type +'('+item.description+')'+'</span>'
+        str =  item.name +'<span class="type"> '+ item.type +'('+item.description+')'+'</span>'
       }
        var clName = 'params-level-'+item.level
        var style = 'padding-left:' + 15 * (item.level+1) + 'px;'
        divContainer.push('<div class='+clName+' style='+style+'>'+str+'</div>')
       })
       divContainer = divContainer.join('');
-      item.innerHTML = '{' + divContainer + '}';
+      if(result.length){
+        item.innerHTML = '{' + divContainer + '}';
+      }else{
+        item.innerHTML =  '';
+      }
+      
       // console.log('result',result,divContainer)
     })
 
+    // 左边导航，瞄点的位置的调整,不用瞄点实现了
+    var aArr = Array.prototype.slice.call(document.querySelectorAll('nav .resource-group a'));
+    var osTop = document.body.scrollTop || document.documentElement.scrollTop
+    aArr.map(function(item){
+      var id = item.getAttribute('data-id').replace('#','');
+      var offsetTop = document.getElementById(id).offsetTop;
+      item.addEventListener('click', function() {  
+        document.body.scrollTop = document.documentElement.scrollTop = offsetTop -25;
+      }, false);  
+    })
+    // 回到顶部也做修改
+    document.getElementById('gotoTop').addEventListener('click', function() {  
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }, false); 
    
 }
 
