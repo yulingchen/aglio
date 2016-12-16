@@ -1,6 +1,6 @@
 {
   "name": "aglio-fork",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "An API Blueprint renderer with theme support",
   "main": "lib/main.js",
   "bin": {
