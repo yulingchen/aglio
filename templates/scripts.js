@@ -180,7 +180,7 @@ function autoCollapse() {
 var result = [];
 var paramId = 0;
  // 对导入的json进行处理
-function objParse(test,i,parentid){
+function objParse(test,i,firstParentObj,parentid,arr,otherI){
 
    var objAnalysis =  test;
    // 对象的解析
@@ -234,12 +234,29 @@ function objParse(test,i,parentid){
                         isShow: true ,  // 自身这一行是否显示
 
                   }
-                
+                  // 添加required属性,第一层级
+                  if(firstParentObj.required&&firstParentObj.required.length&&i==0){
+                    if(firstParentObj.required.join('').indexOf(obj) !== -1){
+                      defaultParamsResponses.required = true
+                    }
+                  }
+                  var arrSave = defaultParamsResponses.required
+                  // 本身required是个数组，应该是找这个的子级,自己为false
+                  if(defaultParamsResponses.required&&defaultParamsResponses.required.length){
+                    defaultParamsResponses.required = false
+                  }
+                   // 添加required属性,其他层级
+                  if(arr&&arr.length&&i==otherI){
+                    if(arr.join('').indexOf(obj) !== -1){
+                      defaultParamsResponses.required = true
+                    }
+                  }
+
                   result.push(defaultParamsResponses);
                   if (objAnalysis[obj].properties) {
-                         objParse(objAnalysis[obj].properties,i+1,paramId);
+                         objParse(objAnalysis[obj].properties,i+1,firstParentObj,paramId,arrSave,i+1);
                   }else{
-                      objParse(objAnalysis[obj].items.properties,i+1,paramId);
+                      objParse(objAnalysis[obj].items.properties,i+1,firstParentObj,paramId,arrSave,i+1);
                   }
              
 
@@ -257,6 +274,23 @@ function objParse(test,i,parentid){
                             index:  paramId,     // 每一行都有自己的下标
                             indexArr: parentid?parentid:null,  // 每一行所属的父级的下标
                             isShow: true ,  // 自身这一行是否显示
+                      }
+                      // 添加required属性,第一层级
+                      if(firstParentObj.required&&firstParentObj.required.length&&i==0){
+                        if(firstParentObj.required.join('').indexOf(obj) !== -1){
+                          defaultParamsResponsesnoson.required = true
+                        }
+                      }
+                      var arrSave1 = defaultParamsResponsesnoson.required
+                      // 本身required是个数组，应该是找这个的子级,自己为false
+                      if(defaultParamsResponsesnoson.required&&defaultParamsResponsesnoson.required.length){
+                        defaultParamsResponsesnoson.required = false
+                      }
+                       // 添加required属性,其他层级
+                      if(arr&&arr.length&&i==otherI){
+                        if(arr.join('').indexOf(obj) !== -1){
+                          defaultParamsResponsesnoson.required = true
+                        }
                       }
                       if (objAnalysis[obj].type === "object" || (objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object")) {
                         defaultParamsResponsesnoson.extend = true;
@@ -313,13 +347,13 @@ function init() {
     var arr = Array.prototype.slice.call(document.querySelectorAll('.schema-container'))
     arr.map(function(item){
      
-      // console.log('json',JSON.parse(item.innerHTML))
+      console.log('json',JSON.parse(item.innerHTML))
       result = [];
       var obj = JSON.parse(item.innerHTML);
       if(obj.properties){
-        objParse(obj.properties,0);
+        objParse(obj.properties,0,obj);
       }else{
-        objParse(obj,0);
+        objParse(obj,0,obj);
       }
       var divContainer = [];
       result.map(function(item){
@@ -330,7 +364,11 @@ function init() {
       }
        var clName = 'params-level-'+item.level
        var style = 'padding-left:' + 15 * (item.level+1) + 'px;'
-       divContainer.push('<div class='+clName+' style='+style+'>'+str+'</div>')
+       var requiredStr = '';
+       if(item.required){
+         requiredStr = '<span style="color:red">&nbsp;required</span>'
+       }
+       divContainer.push('<div class='+clName+' style='+style+'>'+str+requiredStr+'</div>')
       })
       divContainer = divContainer.join('');
       if(result.length){
@@ -339,7 +377,7 @@ function init() {
         item.innerHTML =  '';
       }
       
-      // console.log('result',result,divContainer)
+      console.log('result',result,divContainer)
     })
 
     // 左边导航，瞄点的位置的调整,不用瞄点实现了
