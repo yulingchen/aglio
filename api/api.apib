@@ -1,0 +1,1829 @@
+blueprint FORMAT: 1A
+
+# Swagger Petstore
+
+This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+
+## Group pet
+
+Everything about your Pets
+
+### /v2/pet
+
+#### Add a new pet to the store [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+            {
+              "name": "cillum",
+              "photoUrls": [
+                "est sunt ea",
+                "ullamco velit eiusmod adipisicing"
+              ],
+              "id": -65906365,
+              "status": "available",
+              "tags": [
+                {
+                  "name": "dolor nulla culpa"
+                },
+                {
+                  "id": -45671306
+                },
+                {
+                  "name": "nulla quis ea",
+                  "id": 55401832
+                },
+                {}
+              ],
+              "category": {
+                "name": "amet tempor"
+              }
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "photoUrls"
+              ],
+              "properties": {
+                "idsssssssssssssssss": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "Category"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "example": "doggie"
+                },
+                "photoUrls": {
+                  "type": "array",
+                  "xml": {
+                    "name": "photoUrl",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "xml": {
+                    "name": "tag",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Tag"
+                    }
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                }
+              }
+            }
+
++ Response 405 (application/json)
+
+    Invalid input
+
+    + Body
+
+#### Update an existing pet [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+            {
+              "name": "Duis in cillum culpa",
+              "photoUrls": [
+                "min",
+                "id elit in deserunt",
+                "cupidatat ipsum",
+                "dolore veniam ullamco c",
+                "sint ad esse"
+              ],
+              "status": "sold"
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "photoUrls"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "Category"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "example": "doggie"
+                },
+                "photoUrls": {
+                  "type": "array",
+                  "xml": {
+                    "name": "photoUrl",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "xml": {
+                    "name": "tag",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Tag"
+                    }
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                }
+              }
+            }
+
++ Response 400 (application/json)
+
+    Invalid ID supplied
+
+    + Body
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+            {
+              "name": "culpa commodo laboris est",
+              "photoUrls": [
+                "Lorem Duis consequat commodo ut",
+                "cupidatat dolor incididunt"
+              ],
+              "id": -114589,
+              "status": "sold",
+              "category": {
+                "name": "dolor deseru"
+              },
+              "tags": [
+                {
+                  "id": -25674352
+                },
+                {
+                  "id": -65951846,
+                  "name": "minim tempor in elit"
+                },
+                {
+                  "id": -75887210
+                },
+                {
+                  "id": 77750425
+                },
+                {
+                  "name": "in Ut esse tempor cillum",
+                  "id": 78103579
+                }
+              ]
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "photoUrls"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "Category"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "example": "doggie"
+                },
+                "photoUrls": {
+                  "type": "array",
+                  "xml": {
+                    "name": "photoUrl",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "xml": {
+                    "name": "tag",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Tag"
+                    }
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                }
+              }
+            }
+
++ Response 404 (application/json)
+
+    Pet not found
+
+    + Body
+
++ Request (application/json)
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+            {
+              "name": "culpa sunt sed aliquip",
+              "photoUrls": [
+                "id sed et irure"
+              ],
+              "status": "available",
+              "tags": [
+                {},
+                {
+                  "id": -28795411,
+                  "name": "ex anim incididunt"
+                },
+                {
+                  "id": 71339245,
+                  "name": "minim cillum in quis nisi"
+                }
+              ],
+              "category": {
+                "name": "veniam ut laborum labo",
+                "id": 55771950
+              }
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "photoUrls"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "Category"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "example": "doggie"
+                },
+                "photoUrls": {
+                  "type": "array",
+                  "xml": {
+                    "name": "photoUrl",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "xml": {
+                    "name": "tag",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Tag"
+                    }
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                }
+              }
+            }
+
++ Response 405 (application/json)
+
+    Validation exception
+
+    + Body
+
+#### Finds Pets by status [GET /v2/pet/findByStatus]
+
+Multiple status values can be provided with comma separated strings
+
++ Parameters
+
+    + status: available,pending,sold (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            [
+              {
+                "name": "tempor ipsum minim velit",
+                "photoUrls": [
+                  "dolor voluptate mollit Lorem sit",
+                  "sit"
+                ],
+                "tags": [
+                  {},
+                  {
+                    "name": "deserunt fugiat veniam sint",
+                    "id": 46616932
+                  },
+                  {}
+                ]
+              },
+              {
+                "name": "consequat voluptate",
+                "photoUrls": [
+                  "dolor culpa",
+                  "minim do consequat in in"
+                ]
+              },
+              {
+                "name": "magna in",
+                "photoUrls": [
+                  "consequat minim irure qui"
+                ]
+              },
+              {
+                "name": "quis elit laboris",
+                "photoUrls": [
+                  "aliquip in nisi",
+                  "deserunt dolor in",
+                  "adipisicing voluptate nisi"
+                ],
+                "category": {
+                  "id": -73906105,
+                  "name": "proident nostrud est"
+                },
+                "tags": [
+                  {
+                    "id": 93799198,
+                    "name": "anim dolor dolore c"
+                  },
+                  {
+                    "name": "sunt laborum ut consequat v"
+                  },
+                  {
+                    "name": "labore"
+                  }
+                ]
+              },
+              {
+                "name": "voluptate cupidatat Lorem in",
+                "photoUrls": [
+                  "aliquip aliqua Lorem cupidatat",
+                  "culpa dolore sit officia elit",
+                  "elit ut est"
+                ],
+                "tags": [
+                  {
+                    "name": "pariatur sunt cillum dolor"
+                  },
+                  {
+                    "id": 67133984
+                  },
+                  {}
+                ],
+                "category": {
+                  "name": "aute",
+                  "id": 6396495
+                }
+              }
+            ]
+
+    + Schema
+
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "photoUrls"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Category"
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "doggie"
+                  },
+                  "photoUrls": {
+                    "type": "array",
+                    "xml": {
+                      "name": "photoUrl",
+                      "wrapped": true
+                    },
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "xml": {
+                      "name": "tag",
+                      "wrapped": true
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "xml": {
+                        "name": "Tag"
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "pet status in the store",
+                    "enum": [
+                      "available",
+                      "pending",
+                      "sold"
+                    ]
+                  }
+                },
+                "xml": {
+                  "name": "Pet"
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid status value
+
+    + Body
+
+#### Finds Pets by tags [GET /v2/pet/findByTags]
+
+Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+
++ Parameters
+
+    + tags:  (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            [
+              {
+                "name": "esse anim minim sint",
+                "photoUrls": [
+                  "anim",
+                  "cillum tempor enim sit labore"
+                ],
+                "category": {
+                  "id": -32337910
+                },
+                "status": "available"
+              },
+              {
+                "name": "cillum id dolor sunt anim",
+                "photoUrls": [
+                  "velit",
+                  "adipisicing",
+                  "sint minim"
+                ],
+                "id": -41468742,
+                "category": {
+                  "id": 78848693
+                }
+              },
+              {
+                "name": "commodo fugia",
+                "photoUrls": [
+                  "nulla"
+                ],
+                "tags": [
+                  {}
+                ]
+              }
+            ]
+
+    + Schema
+
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "photoUrls"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Category"
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "doggie"
+                  },
+                  "photoUrls": {
+                    "type": "array",
+                    "xml": {
+                      "name": "photoUrl",
+                      "wrapped": true
+                    },
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "xml": {
+                      "name": "tag",
+                      "wrapped": true
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "xml": {
+                        "name": "Tag"
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "pet status in the store",
+                    "enum": [
+                      "available",
+                      "pending",
+                      "sold"
+                    ]
+                  }
+                },
+                "xml": {
+                  "name": "Pet"
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid tag value
+
+    + Body
+
+### /v2/pet/{petId}
+
+#### Find pet by ID [GET]
+
+Returns a single pet
+
++ Parameters
+
+    + petId (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {
+              "name": "dolor eiusmod",
+              "photoUrls": [
+                "veniam ipsum ex enim"
+              ],
+              "category": {
+                "id": 96163752,
+                "name": "dolore anim"
+              }
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "required": [
+                "name",
+                "photoUrls"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "Category"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "example": "doggie"
+                },
+                "photoUrls": {
+                  "type": "array",
+                  "xml": {
+                    "name": "photoUrl",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "xml": {
+                    "name": "tag",
+                    "wrapped": true
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int64"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "xml": {
+                      "name": "Tag"
+                    }
+                  }
+                },
+                "status": {
+                  "type": "string",
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid ID supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 404 (application/json)
+
+    Pet not found
+
+    + Body
+
+#### Updates a pet in the store with form data [POST]
+
++ Parameters
+
+    + petId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Accept: application/json
+
+    + Attributes
+
+        + name - Updated name of the pet
+        + status - Updated status of the pet
+
+    + Body
+
+            name=eu%20Excepteur%20laborum&status=ullamco%20Ut%20quis%20pari
+
++ Response 405 (application/json)
+
+    Invalid input
+
+    + Body
+
+#### Deletes a pet [DELETE]
+
++ Parameters
+
+    + petId (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+            api_key: 
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid ID supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+            api_key: 
+
+    + Body
+
++ Response 404 (application/json)
+
+    Pet not found
+
+    + Body
+
+### /v2/pet/{petId}/uploadImage
+
+#### uploads an image [POST]
+
++ Parameters
+
+    + petId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Headers
+
+            Accept: application/json
+
+    + Attributes
+
+        + additionalMetadata - Additional data to pass to server
+        + file - file to upload
+
+    + Body
+
+            additionalMetadata=officia%20sed%20fugiat%20laborum%20aliquip
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {
+              "type": "dolor anim",
+              "code": -26638475,
+              "message": "sunt ipsum est"
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+
+## Group store
+
+Access to Petstore orders
+
+### /v2/store/inventory
+
+#### Returns pet inventories by status [GET]
+
+Returns a map of status codes to quantities
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {}
+
+    + Schema
+
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+
+### /v2/store/order
+
+#### Place an order for a pet [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "petId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "shipDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Order Status",
+                  "enum": [
+                    "placed",
+                    "approved",
+                    "delivered"
+                  ]
+                },
+                "complete": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {}
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "petId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "shipDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Order Status",
+                  "enum": [
+                    "placed",
+                    "approved",
+                    "delivered"
+                  ]
+                },
+                "complete": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "petId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "shipDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Order Status",
+                  "enum": [
+                    "placed",
+                    "approved",
+                    "delivered"
+                  ]
+                },
+                "complete": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+
++ Response 400 (application/json)
+
+    Invalid Order
+
+    + Body
+
+### /v2/store/order/{orderId}
+
+#### Find purchase order by ID [GET]
+
+For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+
++ Parameters
+
+    + orderId (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {
+              "shipDate": "2898-01-17T12:52:57.262Z",
+              "complete": true
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "petId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "shipDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Order Status",
+                  "enum": [
+                    "placed",
+                    "approved",
+                    "delivered"
+                  ]
+                },
+                "complete": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid ID supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 404 (application/json)
+
+    Order not found
+
+    + Body
+
+#### Delete purchase order by ID [DELETE]
+
+For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+
++ Parameters
+
+    + orderId (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid ID supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 404 (application/json)
+
+    Order not found
+
+    + Body
+
+## Group user
+
+Operations about user
+
+### /v2/user
+
+#### Create user [POST]
+
+This can only be done by the logged in user.
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "userStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "User Status"
+                }
+              }
+            }
+
+### /v2/user/createWithArray
+
+#### Creates list of users with given input array [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "userStatus": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "User Status"
+                  }
+                },
+                "xml": {
+                  "name": "User"
+                }
+              }
+            }
+
+### /v2/user/createWithList
+
+#### Creates list of users with given input array [POST]
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "userStatus": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "User Status"
+                  }
+                },
+                "xml": {
+                  "name": "User"
+                }
+              }
+            }
+
+#### Logs user into the system [GET /v2/user/login]
+
++ Parameters
+
+    + username (required)
+    
+    + password (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Headers
+
+            X-Rate-Limit: 
+            X-Expires-After: 
+
+    + Body
+
+            veniam deserunt sint reprehenderit dolore
+
+    + Schema
+
+            {
+              "type": "string"
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid username/password supplied
+
+    + Body
+
+### /v2/user/logout
+
+#### Logs out current logged in user session [GET]
+
+### /v2/user/{username}
+
+#### Get user by user name [GET]
+
++ Parameters
+
+    + username (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 200 (application/json)
+
+    successful operation
+
+    + Body
+
+            {
+              "firstName": "aliquip ex eiusmod",
+              "phone": "ut aliquip fugiat anim do",
+              "id": -35319592
+            }
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "userStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "User Status"
+                }
+              }
+            }
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid username supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 404 (application/json)
+
+    User not found
+
+    + Body
+
+#### Updated user [PUT]
+
+This can only be done by the logged in user.
+
++ Parameters
+
+    + username (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "userStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "User Status"
+                }
+              }
+            }
+
++ Response 400 (application/json)
+
+    Invalid user supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "userStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "User Status"
+                }
+              }
+            }
+
++ Response 404 (application/json)
+
+    User not found
+
+    + Body
+
+#### Delete user [DELETE]
+
+This can only be done by the logged in user.
+
++ Parameters
+
+    + username (required)
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 400 (application/json)
+
+    Invalid username supplied
+
+    + Body
+
++ Request
+
+    + Headers
+
+            Accept: application/json
+
+    + Body
+
++ Response 404 (application/json)
+
+    User not found
+
+    + Body
+
+
+

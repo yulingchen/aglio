@@ -1,0 +1,179 @@
+
+// 总体背景颜色值
+@base-bg-color: #eaeff3;
+
+// 方法颜色值
+@get-color: #63a9eb;
+@head-color: #68f0f8;
+@options-color: #29d2a1;
+@post-color: #f4c100;
+@put-color: #f86868;
+@patch-color: #f79c82;
+@delete-color: #c9302c;
+
+// 左边nav头部颜色背景值
+@nav-header-bg-color: #2095f2;
+
+// 右边方法那一行的背景颜色值
+@method-bg-color: #e8f3ff;
+@container-bg-grey-color: #f7f7f7;
+@base-color: #2095f2;
+
+body{
+	background-color: @base-bg-color !important
+}
+
+
+.api-header{
+	height: 85px;
+	line-height: 85px;
+	color: #2095f2;
+	font-size: 38px;
+	position: fixed;
+	left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  padding-left: 25px;
+  border: 1px solid #f2f2f2;
+}
+.api-container{
+	nav{
+		top: 105px;
+		left: 20px;
+	}
+	.content{
+		margin-top: 105px;
+		background-color: #fff;
+		padding: 30px;
+		// position: relative;
+		header{
+			margin-top: 0 ;
+			#top{
+				margin-top: 0
+			}
+		}
+		.resource-group{
+			border-color: #fff;
+			.group-heading{
+				background-color: transparent;
+				color: @base-color;
+
+			}
+			.action{
+				border-color: #5bb0f3;
+				background-color:@container-bg-grey-color;
+				border-radius: 0;
+				position: relative;
+				margin-top: 45px;
+				overflow: visible;
+				.action-absolute{
+					position: absolute;
+					left: 0;
+					top: -45px;
+				}
+				.action-heading{
+					background-color: @method-bg-color;
+					border-bottom-color: transparent;
+					.name{
+						color: @base-color;
+					}
+				}
+				.title{
+					color: @base-color;
+					border-bottom-color: transparent;
+				}
+				pre{
+					background-color: #fff;
+				}
+			}
+		}
+	}
+}
+.resource-group{
+	// margin-bottom: 0;
+	// border-bottom-width: 0;
+	// border-radius: 0;
+}
+.resource-group:last-of-type{
+	border-bottom-width: 1px;
+}
+nav {
+	ul a:hover{
+		border-left-color: @nav-header-bg-color
+	}
+	ul ul a{
+		padding-left:12px;
+	}
+	.badge.post{
+		background-color: @post-color;
+		i{
+			color:  #dff0d8
+		}
+	}
+	.badge.get{
+		background-color: @get-color;
+		i{
+			color: #d9edf7
+		}
+	}
+	.badge.head{
+		background-color: @head-color;
+		i{
+			color:  @post-color
+		}
+	}
+	.badge.options{
+		background-color: @options-color;
+		i{
+			color:  @post-color
+		}
+	}
+	.badge.put{
+		background-color: @put-color;
+		i{
+			color:  #f79c82
+		}
+	}
+	.badge.patch{
+		background-color: @patch-color;
+		i{
+			color:  @post-color
+		}
+	}
+	.badge.delete{
+		background-color: @delete-color;
+		i{
+			color:  #f79c82
+		}
+	}
+	.resource-group {
+		border-radius: 0;
+		.heading{
+			background-color: @nav-header-bg-color;
+			color: #fff;
+			a{
+				border-radius: 0;
+				background-color: transparent;
+				color: #fff;
+				font-size: 16px;
+			}
+			a:hover{
+					border-left-color: @nav-header-bg-color
+			}
+			.chevron i{
+				color: #fff;
+			}
+		}
+	}
+}
+
+.schema-container {
+	color: #333;
+	.type{
+		color: #999
+	}
+}
+
+
