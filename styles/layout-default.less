@@ -863,9 +863,6 @@ nav .resource-group{
 }
 
 
-
-
-
 // 总体背景颜色值
 @base-bg-color: #eaeff3;
 
@@ -914,7 +911,7 @@ body{
         margin-top: 105px;
         background-color: #fff;
         padding: 30px;
-        position: relative;
+        // position: relative;
         header{
             margin-top: 0 ;
             #top{
@@ -932,6 +929,14 @@ body{
                 border-color: #5bb0f3;
                 background-color:@container-bg-grey-color;
                 border-radius: 0;
+                position: relative;
+                margin-top: 45px;
+                overflow: visible;
+                .action-absolute{
+                    position: absolute;
+                    left: 0;
+                    top: -45px;
+                }
                 .action-heading{
                     background-color: @method-bg-color;
                     border-bottom-color: transparent;
@@ -965,6 +970,48 @@ nav {
     ul ul a{
         padding-left:12px;
     }
+    .badge.post{
+        background-color: @post-color;
+        i{
+            color:  #dff0d8
+        }
+    }
+    .badge.get{
+        background-color: @get-color;
+        i{
+            color: #d9edf7
+        }
+    }
+    .badge.head{
+        background-color: @head-color;
+        i{
+            color:  @post-color
+        }
+    }
+    .badge.options{
+        background-color: @options-color;
+        i{
+            color:  @post-color
+        }
+    }
+    .badge.put{
+        background-color: @put-color;
+        i{
+            color:  #f79c82
+        }
+    }
+    .badge.patch{
+        background-color: @patch-color;
+        i{
+            color:  @post-color
+        }
+    }
+    .badge.delete{
+        background-color: @delete-color;
+        i{
+            color:  #f79c82
+        }
+    }
     .resource-group {
         border-radius: 0;
         .heading{
@@ -992,6 +1039,7 @@ nav {
         color: #999
     }
 }
+
 
 
 

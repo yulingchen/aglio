@@ -162,6 +162,8 @@ mixin Content()
 
     //- Loop through and display information about all the resource
     //- groups, resources, and actions.
+
+
     each resourceGroup in self.api.resourceGroups || []
         section.resource-group(id=resourceGroup.elementId)
             h2.group-heading
@@ -170,18 +172,19 @@ mixin Content()
                 a.permalink(href=resourceGroup.elementLink) &para;
             if resourceGroup.descriptionHtml
                 != resourceGroup.descriptionHtml
-
             each resource in resourceGroup.resources || []
                 .resource(id=resource.elementId)
-                    h3.resource-heading
-                        != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
-                        = " "
-                        a.permalink(href=resource.elementLink) &nbsp;&para;
-                    if resource.description
-                        != self.markdown(resource.description)
+                    //- h3.resource-heading
+                    //-     !=resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
+                    //-     = " "
+                    //-     a.permalink(href=resource.elementLink) &nbsp;&para;
+                    //- if resource.description
+                    //-     != self.markdown(resource.description)
 
                     each action in resource.actions || []
                         .action(class=action.methodLower, id=action.elementId)
+                            //- 名称不是每次都有，这里暂时定位到头部
+                            h4.action-absolute!= action.name
                             h4.action-heading
                                 .name!= action.name
                                 a.method(class=action.methodLower, data-id=action.elementLink)

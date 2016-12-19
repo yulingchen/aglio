@@ -347,7 +347,7 @@ function init() {
     var arr = Array.prototype.slice.call(document.querySelectorAll('.schema-container'))
     arr.map(function(item){
      
-      console.log('json',JSON.parse(item.innerHTML))
+      // console.log('json',JSON.parse(item.innerHTML))
       result = [];
       var obj = JSON.parse(item.innerHTML);
       if(obj.properties){
@@ -377,7 +377,7 @@ function init() {
         item.innerHTML =  '';
       }
       
-      console.log('result',result,divContainer)
+      // console.log('result',result,divContainer)
     })
 
     // 左边导航，瞄点的位置的调整,不用瞄点实现了
@@ -387,7 +387,7 @@ function init() {
       var id = item.getAttribute('data-id').replace('#','');
       var offsetTop = document.getElementById(id).offsetTop;
       item.addEventListener('click', function() {  
-        document.body.scrollTop = document.documentElement.scrollTop = offsetTop -25;
+        document.body.scrollTop = document.documentElement.scrollTop = offsetTop -130;
       }, false);  
     })
     // 回到顶部也做修改
