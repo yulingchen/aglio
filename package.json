@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/danielgtaylor/aglio/tree/olio-theme",
   "dependencies": {
+    "aglio-fork": "^2.2.9",
     "coffee-script": "^1.8.0",
     "highlight.js": "^8.4.0",
     "jade": "^1.8.2",
