@@ -74,9 +74,11 @@ mixin Parameters(params)
             span.close Hide
             span.open Show
     .collapse-content
+        span.required #{JSON.stringify(params)}
         dl.inner: each param in params || []
             dt= self.urldec(param.name)
             dd
+                span.required #{JSON.stringify(param)}
                 code= param.type || 'string'
                 | &nbsp;
                 if param.required
@@ -163,8 +165,9 @@ mixin Content()
     //- Loop through and display information about all the resource
     //- groups, resources, and actions.
 
-
+    span.required #{JSON.stringify(self)}
     each resourceGroup in self.api.resourceGroups || []
+
         section.resource-group(id=resourceGroup.elementId)
             h2.group-heading
                 != resourceGroup.name || 'Resource Group'
@@ -181,6 +184,7 @@ mixin Content()
                     //- if resource.description
                     //-     != self.markdown(resource.description)
 
+                    
                     each action in resource.actions || []
                         .action(class=action.methodLower, id=action.elementId)
                             //- 名称不是每次都有，这里暂时定位到头部
@@ -203,6 +207,7 @@ mixin Content()
 
                             //- A list of sub-sections for parameters, requests
                             //- and responses.
+
                             if action.parameters.length
                                 +Parameters(action.parameters)
                             if action.examples
