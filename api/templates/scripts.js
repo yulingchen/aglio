@@ -190,24 +190,26 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
              
              var paramType ;
 
-             // console.log('obj',obj,objAnalysis[obj].type)
+             // console.log('obj',obj,objAnalysis[obj],objAnalysis[obj].type)
 
             
              if (objAnalysis[obj].type === "object"){
               paramType = "object"
              }
-             
-             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="string"){
-               paramType = "array(string)"
-             }
-             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="number"){
-               paramType = "array(number)"
-             }
-             else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="boolean"){
-               paramType = "array(boolean)"
-             }
-              else if(objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object"){
-               paramType = "array(object)"
+             else if(objAnalysis[obj].type === "array"){
+              if(objAnalysis[obj].items){
+                if(objAnalysis[obj].items.type==="string"){
+                 paramType = "array(string)"
+                }else if(objAnalysis[obj].items.type==="number"){
+                  paramType = "array(number)"
+                }else if(objAnalysis[obj].items.type==="boolean"){
+                  paramType = "array(boolean)"
+                }else if(objAnalysis[obj].items.type==="object"){
+                  paramType = "array(object)"
+                }
+              }else{
+                 paramType = "array(object)"
+              }
              }
              else {
               paramType = objAnalysis[obj].type
@@ -217,7 +219,7 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
               if (
                   (objAnalysis[obj].type === "object" && objAnalysis[obj].properties)
                   || 
-                  (objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object" && objAnalysis[obj].items.properties)
+                  (objAnalysis[obj].type === "array" &&objAnalysis[obj].items&& objAnalysis[obj].items.type==="object" && objAnalysis[obj].items.properties)
               ) {
                  
                   var defaultParamsResponses = {
@@ -292,7 +294,7 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
                           defaultParamsResponsesnoson.required = true
                         }
                       }
-                      if (objAnalysis[obj].type === "object" || (objAnalysis[obj].type === "array" && objAnalysis[obj].items.type==="object")) {
+                      if (objAnalysis[obj].type === "object" || (objAnalysis[obj].type === "array" && objAnalysis[obj].items&& objAnalysis[obj].items.type==="object")) {
                         defaultParamsResponsesnoson.extend = true;
                       }
                       if (objAnalysis[obj].type) {
