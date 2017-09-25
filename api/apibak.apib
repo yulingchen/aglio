@@ -1,0 +1,3124 @@
+FORMAT: 1A
+
+# 测试项目
+
+测试项目
+
+## Group PaaS
+
+#### 登录到PaaS建模 [GET /api/admin/paas/modeling]
+
+登录到PaaS建模
+
++ Parameters
+
+    + next (required)
+
++ Response 302
+
+    + Body
+
+## Group Auth
+
+### /api/auth/login
+
+#### 多租户用户登录 [POST]
+
+多租户用户登录
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + tenant_code (required) - 租户代码
+        + account (required) - 帐号
+        + password (required) - 密码
+
+    + Body
+
+            tenant_code=laboris%20velit%20occaecat&account=consectetur%20cupidatat%20in%20Ut&password=do%20sed%20qui%20laborum
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "result": {
+                  "type": "boolean",
+                  "description": "验证是否通过"
+                },
+                "msg": {
+                  "type": "string",
+                  "description": "提示信息,验证失败的提示"
+                },
+                "data": {
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "令牌,需要客户端保存,并在调用api时使用Authorization Bear xxxx"
+                    }
+                  },
+                  "type": "object",
+                  "description": "result为true时有,登录过程传输的数据"
+                }
+              },
+              "type": "object"
+            }
+
+## Group Admin
+
+### /api/admin/check
+
+#### 检查登录,返回用户信息 [GET]
+
+检查登录,返回用户信息
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "boolean"
+                }
+              }
+            }
+
+### /api/admin/views/{lvId}/model
+
+#### 实体模型 [GET]
+
+实体模型
+
++ Parameters
+
+    + lvId (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "实体字段类型"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "实体字段名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识实体字段"
+                          },
+                          "hide": {
+                            "type": "boolean",
+                            "description": "是否隐藏"
+                          },
+                          "canSort": {
+                            "type": "number",
+                            "description": "是否可排序"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/{lvId}/list
+
+#### 实体列表 [POST]
+
+实体列表
+
++ Parameters
+
+    + lvId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + page (number, required) - page
+        + pageSize (number, required) - pageSize
+
+    + Body
+
+            page=-39136449&pageSize=-62597544
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "properties": {
+                    "total": {
+                      "type": "number",
+                      "description": "总记录数"
+                    },
+                    "items": {
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number",
+                  "description": "0-成功,其他异常"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/model/fields
+
+#### 保存视图显示字段 [POST]
+
+保存视图显示字段
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - lv_instance.id
+        + fields (required) - field_id,多个id用符号,隔开.eg: 1xx,2xx,3xx
+
+    + Body
+
+            lv_id=laborum%20aliqua%20proident%20labore&fields=ve
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/{name}/model
+
+#### 实体模型 [GET]
+
+实体模型
+
++ Parameters
+
+    + name (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "canSort": {
+                            "description": "是否可排序",
+                            "type": "number"
+                          },
+                          "hide": {
+                            "description": "是否隐藏",
+                            "type": "boolean"
+                          },
+                          "id": {
+                            "description": "标识实体字段",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "实体字段名称",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "实体字段类型",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+### /api/admin/search-favorite/delete/{view_id}
+
+#### 删除常用检索 [DELETE]
+
+删除常用检索
+
++ Parameters
+
+    + view_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/list/{lv_id}
+
+#### 常用检索列表 [GET]
+
+常用检索列表
+
++ Parameters
+
+    + lv_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识视图字段"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/create
+
+#### 添加常用检索 [POST]
+
+添加常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - 列表示例id
+        + title (required) - 检索名称
+        + is_formula (boolean, required) - 是否启用高级公式
+        + formula - 高级公式
+        + conditions (required) - 检索条件json字符串
+
+    + Body
+
+            lv_id=sed%20esse%20consequat%20dolor&title=qui%20cupidatat%20Lorem%20do%20id&is_formula=false&conditions=Excepteur%20enim
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/last-access
+
+#### 添加最后访问的常用检索 [POST]
+
+添加最后访问的常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - 列表示例id
+        + view_id (required) - 视图id
+
+    + Body
+
+            lv_id=cupidatat&view_id=dolore
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/update
+
+#### 更新常用检索 [POST]
+
+更新常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 常用检索id
+        + lv_id (required) - 列表示例id
+        + title (required) - 检索名称
+        + is_formula (required) - 是否启用高级公式
+        + formula (required) - 高级公式
+        + filter (required) - 检索条件json字符串
+
+    + Body
+
+            id=est&lv_id=enim%20tempor%20aliquip&title=incididunt%20commodo%20pariatur&is_formula=tempor&formula=commodo%20exercitation%20labore%20quis&filter=quis%20deserunt%20
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/{entityId}/layout
+
+#### 实体添加表单 [GET]
+
+实体添加表单
+
++ Parameters
+
+    + entityId (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "类型"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "字段显示名称"
+                          },
+                          "required": {
+                            "type": "number",
+                            "description": "是否必填"
+                          },
+                          "option_style": {
+                            "type": "string",
+                            "description": "选项样式"
+                          },
+                          "img_limit": {
+                            "type": "number",
+                            "description": "图片数量"
+                          },
+                          "field_type": {
+                            "type": "string",
+                            "description": "实体字段类型"
+                          },
+                          "field_name": {
+                            "type": "string",
+                            "description": "实体字段名称"
+                          },
+                          "digit": {
+                            "type": "number",
+                            "description": "小数位数"
+                          },
+                          "date_type": {
+                            "type": "string",
+                            "description": "日期类型"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "内容"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/organization/create
+
+#### 添加组织 [POST]
+
+添加组织
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 组织名称
+        + kind (required) - 组织类型
+        + parent_id (required) - 父id
+
+    + Body
+
+            name=et&kind=aliqua&parent_id=culpa%20exercitation%20dolor%20aliqua%20nisi
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/organization/delete/{org_id}
+
+#### 删除组织 [DELETE]
+
+删除组织
+
++ Parameters
+
+    + org_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+#### 组织列表 [GET /api/admin/organization/list]
+
+组织列表
+
++ Parameters
+
+    + org_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "标识视图字段",
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "视图名称",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+### /api/admin/organization/update
+
+#### 添加组织 [POST]
+
+添加组织
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 组织id
+        + name (required) - 组织名称
+        + kind (required) - 组织类型
+        + parent_id (required) - 父id
+
+    + Body
+
+            id=non%20est&name=ad%20eu%20mollit%20Lorem%20dolor&kind=id%20dolore&parent_id=tempor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/entities
+
+#### 添加实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}} [POST]
+
+添加实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}}
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityName (required) - 表名
+        + properties (required) - 字段json对象
+
+    + Body
+
+            entityName=fugiat&properties=est%20laborum%20qui%20aliqua%20off
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/delete
+
+#### 删除实体记录 [POST]
+
+删除实体记录
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityId (required) - 表名
+        + ids (required) - 实体记录id列表,用逗号隔开.如:1,2,3
+
+    + Body
+
+            entityId=cupidatat%20ullamco%20a&ids=dolor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/{id}
+
+#### 更新实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}} [PUT]
+
+更新实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}}
+
++ Parameters
+
+    + id (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityId (required) - 实体id
+        + properties (required) - 字段对象
+
+    + Body
+
+            entityId=officia%20veniam%20laboris&properties=aute%20in%20ut
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/list
+
+#### 实体列表 [GET]
+
+实体列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "view_title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "view_id": {
+                            "type": "string",
+                            "description": "视图id"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "类型"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "显示名称"
+                          },
+                          "lv_id": {
+                            "type": "string",
+                            "description": "列表id"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "实体id"
+                          },
+                          "entity_name": {
+                            "type": "string",
+                            "description": "实体名称"
+                          },
+                          "api_name": {
+                            "type": "string",
+                            "description": "实体api名称"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/users/{lvId}/list
+
+#### 检索列表数据 [POST]
+
+检索列表数据
+
++ Parameters
+
+    + lvId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + page (number, required) - page
+        + pageSize (number, required) - pageSize
+
+    + Body
+
+            page=50743656&pageSize=78110913
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "properties": {
+                    "total": {
+                      "type": "number",
+                      "description": "总记录数"
+                    },
+                    "items": {
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number",
+                  "description": "0-成功,其他异常"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/upload-img
+
+#### 上传图片 [POST]
+
+上传图片
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + image (required) - 图片资源
+
+    + Body
+
+            image=eiusmod%20irure
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "图片url"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "图片名称"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/create
+
+#### 添加项目 [POST]
+
+添加项目
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 项目名称
+        + parent_id (required) - 父id
+        + org_id (required) - 组织id
+
+    + Body
+
+            name=occaecat%20Lorem&parent_id=id%20enim&org_id=est%20culpa%20voluptate%20Ut
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/delete/{project_id}
+
+#### 删除项目 [DELETE]
+
+删除项目
+
++ Parameters
+
+    + project_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/list
+
+#### 项目列表 [GET]
+
+项目列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识视图字段"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/update
+
+#### 更新项目 [POST]
+
+更新项目
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 项目id
+        + name (required) - 项目名称
+
+    + Body
+
+            id=voluptate%20id%20sunt%20dolore&name=ad%20anim%20irure%20culpa%20sunt
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/post/list
+
+#### 岗位列表 [GET]
+
+岗位列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "岗位名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "岗位id"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/delete/{post_id}
+
+#### 删除岗位 [DELETE]
+
+删除岗位
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/create
+
+#### 添加岗位 [POST]
+
+添加岗位
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 岗位名称
+
+    + Body
+
+            name=in%20d
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/delete/{post_id}
+
+#### 删除岗位 [DELETE]
+
+删除岗位
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/update
+
+#### 更新岗位 [POST]
+
+更新岗位
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 岗位id
+        + name (required) - 岗位名称
+
+    + Body
+
+            id=commodo%20officia%20magna%20nulla&name=deserunt%20incididunt%20ex
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/authorization/post
+
+#### 岗位授权 [POST]
+
+岗位授权
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + post_id (required) - 岗位id
+        + action_ids (required) - 操作id
+
+    + Body
+
+            post_id=deserunt%20dolore%20labore%20aliquip%20eiusmod&action_ids=pariatur
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/authorization/user
+
+#### 用户授权 [POST]
+
+用户授权
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + user_ids (required) - 用户id
+        + post_ids (required) - 岗位id
+        + project_ids (required) - 项目名称
+
+    + Body
+
+            user_ids=id%20consectetur%20sed%20minim%20cillum&post_ids=occaecat%20reprehenderit&project_ids=Duis%20consectetur%20consequat%20aute
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/permission/list
+
+#### 授权操作列表 [POST]
+
+授权操作列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+#### 授权操作列表 [GET]
+
+授权操作列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/permission/post/{post_id}
+
+#### 岗位分配的操作 [GET]
+
+岗位分配的操作
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/permission/user/{user_id}
+
+#### 用户分配的权限 [GET]
+
+用户分配的权限
+
++ Parameters
+
+    + user_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/users
+
+#### 添加用户记录. body为json对象 {properties: {field: xxx, field2: xxx}}} [POST]
+
+添加用户记录. body为json对象 {properties: {field: xxx, field2: xxx}}}
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + properties (required) - 字段json对象
+
+    + Body
+
+            properties=nostrud
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+## Group AdminUser
+
+### /api/admin/user/update-status
+
+#### 更新用户状态 [POST]
+
+更新用户状态
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + userIds (required) - 用户id,支持多个.eg: 1xx,2xx
+        + status (required) - 用户状态:在职, 已离职, 已禁用, 已过期, 已锁定
+
+    + Body
+
+            userIds=voluptate%20nulla%20quis%20Duis&status=tempor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/user/reset-password
+
+#### 重置密码 [POST]
+
+重置密码
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + userId (required) - 用户id
+
+    + Body
+
+            userId=est%20nisi
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+
+>>>api1 FORMAT: 1A
+
+# 测试项目
+
+测试项目
+
+## Group PaaS
+
+#### 登录到PaaS建模 [GET /api/admin/paas/modeling]
+
+登录到PaaS建模
+
++ Parameters
+
+    + next (required)
+
++ Response 302
+
+    + Body
+
+## Group Auth
+
+### /api/auth/login
+
+#### 多租户用户登录 [POST]
+
+多租户用户登录
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + tenant_code (required) - 租户代码
+        + account (required) - 帐号
+        + password (required) - 密码
+
+    + Body
+
+            tenant_code=laboris%20velit%20occaecat&account=consectetur%20cupidatat%20in%20Ut&password=do%20sed%20qui%20laborum
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "result": {
+                  "type": "boolean",
+                  "description": "验证是否通过"
+                },
+                "msg": {
+                  "type": "string",
+                  "description": "提示信息,验证失败的提示"
+                },
+                "data": {
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "令牌,需要客户端保存,并在调用api时使用Authorization Bear xxxx"
+                    }
+                  },
+                  "type": "object",
+                  "description": "result为true时有,登录过程传输的数据"
+                }
+              },
+              "type": "object"
+            }
+
+## Group Admin
+
+### /api/admin/check
+
+#### 检查登录,返回用户信息 [GET]
+
+检查登录,返回用户信息
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "boolean"
+                }
+              }
+            }
+
+### /api/admin/views/{lvId}/model
+
+#### 实体模型 [GET]
+
+实体模型
+
++ Parameters
+
+    + lvId (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "实体字段类型"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "实体字段名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识实体字段"
+                          },
+                          "hide": {
+                            "type": "boolean",
+                            "description": "是否隐藏"
+                          },
+                          "canSort": {
+                            "type": "number",
+                            "description": "是否可排序"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/{lvId}/list
+
+#### 实体列表 [POST]
+
+实体列表
+
++ Parameters
+
+    + lvId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + page (number, required) - page
+        + pageSize (number, required) - pageSize
+
+    + Body
+
+            page=-39136449&pageSize=-62597544
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "properties": {
+                    "total": {
+                      "type": "number",
+                      "description": "总记录数"
+                    },
+                    "items": {
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number",
+                  "description": "0-成功,其他异常"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/model/fields
+
+#### 保存视图显示字段 [POST]
+
+保存视图显示字段
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - lv_instance.id
+        + fields (required) - field_id,多个id用符号,隔开.eg: 1xx,2xx,3xx
+
+    + Body
+
+            lv_id=laborum%20aliqua%20proident%20labore&fields=ve
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/views/{name}/model
+
+#### 实体模型 [GET]
+
+实体模型
+
++ Parameters
+
+    + name (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "canSort": {
+                            "description": "是否可排序",
+                            "type": "number"
+                          },
+                          "hide": {
+                            "description": "是否隐藏",
+                            "type": "boolean"
+                          },
+                          "id": {
+                            "description": "标识实体字段",
+                            "type": "string"
+                          },
+                          "name": {
+                            "description": "实体字段名称",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "实体字段类型",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+### /api/admin/search-favorite/delete/{view_id}
+
+#### 删除常用检索 [DELETE]
+
+删除常用检索
+
++ Parameters
+
+    + view_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/list/{lv_id}
+
+#### 常用检索列表 [GET]
+
+常用检索列表
+
++ Parameters
+
+    + lv_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识视图字段"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/create
+
+#### 添加常用检索 [POST]
+
+添加常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - 列表示例id
+        + title (required) - 检索名称
+        + is_formula (boolean, required) - 是否启用高级公式
+        + formula - 高级公式
+        + conditions (required) - 检索条件json字符串
+
+    + Body
+
+            lv_id=sed%20esse%20consequat%20dolor&title=qui%20cupidatat%20Lorem%20do%20id&is_formula=false&conditions=Excepteur%20enim
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/last-access
+
+#### 添加最后访问的常用检索 [POST]
+
+添加最后访问的常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + lv_id (required) - 列表示例id
+        + view_id (required) - 视图id
+
+    + Body
+
+            lv_id=cupidatat&view_id=dolore
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/search-favorite/update
+
+#### 更新常用检索 [POST]
+
+更新常用检索
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 常用检索id
+        + lv_id (required) - 列表示例id
+        + title (required) - 检索名称
+        + is_formula (required) - 是否启用高级公式
+        + formula (required) - 高级公式
+        + filter (required) - 检索条件json字符串
+
+    + Body
+
+            id=est&lv_id=enim%20tempor%20aliquip&title=incididunt%20commodo%20pariatur&is_formula=tempor&formula=commodo%20exercitation%20labore%20quis&filter=quis%20deserunt%20
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/{entityId}/layout
+
+#### 实体添加表单 [GET]
+
+实体添加表单
+
++ Parameters
+
+    + entityId (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "类型"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "字段显示名称"
+                          },
+                          "required": {
+                            "type": "number",
+                            "description": "是否必填"
+                          },
+                          "option_style": {
+                            "type": "string",
+                            "description": "选项样式"
+                          },
+                          "img_limit": {
+                            "type": "number",
+                            "description": "图片数量"
+                          },
+                          "field_type": {
+                            "type": "string",
+                            "description": "实体字段类型"
+                          },
+                          "field_name": {
+                            "type": "string",
+                            "description": "实体字段名称"
+                          },
+                          "digit": {
+                            "type": "number",
+                            "description": "小数位数"
+                          },
+                          "date_type": {
+                            "type": "string",
+                            "description": "日期类型"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "内容"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/organization/create
+
+#### 添加组织 [POST]
+
+添加组织
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 组织名称
+        + kind (required) - 组织类型
+        + parent_id (required) - 父id
+
+    + Body
+
+            name=et&kind=aliqua&parent_id=culpa%20exercitation%20dolor%20aliqua%20nisi
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/organization/delete/{org_id}
+
+#### 删除组织 [DELETE]
+
+删除组织
+
++ Parameters
+
+    + org_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+#### 组织列表 [GET /api/admin/organization/list]
+
+组织列表
+
++ Parameters
+
+    + org_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "标识视图字段",
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "视图名称",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+### /api/admin/organization/update
+
+#### 添加组织 [POST]
+
+添加组织
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 组织id
+        + name (required) - 组织名称
+        + kind (required) - 组织类型
+        + parent_id (required) - 父id
+
+    + Body
+
+            id=non%20est&name=ad%20eu%20mollit%20Lorem%20dolor&kind=id%20dolore&parent_id=tempor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/entities
+
+#### 添加实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}} [POST]
+
+添加实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}}
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityName (required) - 表名
+        + properties (required) - 字段json对象
+
+    + Body
+
+            entityName=fugiat&properties=est%20laborum%20qui%20aliqua%20off
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/delete
+
+#### 删除实体记录 [POST]
+
+删除实体记录
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityId (required) - 表名
+        + ids (required) - 实体记录id列表,用逗号隔开.如:1,2,3
+
+    + Body
+
+            entityId=cupidatat%20ullamco%20a&ids=dolor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/{id}
+
+#### 更新实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}} [PUT]
+
+更新实体记录. body为json对象,如: {entityName: xxx, properties: {field: xxx, field2: xxx}}
+
++ Parameters
+
+    + id (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + entityId (required) - 实体id
+        + properties (required) - 字段对象
+
+    + Body
+
+            entityId=officia%20veniam%20laboris&properties=aute%20in%20ut
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/list
+
+#### 实体列表 [GET]
+
+实体列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "view_title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "view_id": {
+                            "type": "string",
+                            "description": "视图id"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "类型"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "显示名称"
+                          },
+                          "lv_id": {
+                            "type": "string",
+                            "description": "列表id"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "实体id"
+                          },
+                          "entity_name": {
+                            "type": "string",
+                            "description": "实体名称"
+                          },
+                          "api_name": {
+                            "type": "string",
+                            "description": "实体api名称"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/users/{lvId}/list
+
+#### 检索列表数据 [POST]
+
+检索列表数据
+
++ Parameters
+
+    + lvId (required)
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + page (number, required) - page
+        + pageSize (number, required) - pageSize
+
+    + Body
+
+            page=50743656&pageSize=78110913
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "properties": {
+                    "total": {
+                      "type": "number",
+                      "description": "总记录数"
+                    },
+                    "items": {
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number",
+                  "description": "0-成功,其他异常"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/entity/upload-img
+
+#### 上传图片 [POST]
+
+上传图片
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + image (required) - 图片资源
+
+    + Body
+
+            image=eiusmod%20irure
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "图片url"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "图片名称"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/create
+
+#### 添加项目 [POST]
+
+添加项目
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 项目名称
+        + parent_id (required) - 父id
+        + org_id (required) - 组织id
+
+    + Body
+
+            name=occaecat%20Lorem&parent_id=id%20enim&org_id=est%20culpa%20voluptate%20Ut
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/delete/{project_id}
+
+#### 删除项目 [DELETE]
+
+删除项目
+
++ Parameters
+
+    + project_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/list
+
+#### 项目列表 [GET]
+
+项目列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "视图名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "标识视图字段"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/update
+
+#### 更新项目 [POST]
+
+更新项目
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 项目id
+        + name (required) - 项目名称
+
+    + Body
+
+            id=voluptate%20id%20sunt%20dolore&name=ad%20anim%20irure%20culpa%20sunt
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/post/list
+
+#### 岗位列表 [GET]
+
+岗位列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "岗位名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "岗位id"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/project/delete/{post_id}
+
+#### 删除岗位 [DELETE]
+
+删除岗位
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/create
+
+#### 添加岗位 [POST]
+
+添加岗位
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + name (required) - 岗位名称
+
+    + Body
+
+            name=in%20d
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/delete/{post_id}
+
+#### 删除岗位 [DELETE]
+
+删除岗位
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/post/update
+
+#### 更新岗位 [POST]
+
+更新岗位
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + id (required) - 岗位id
+        + name (required) - 岗位名称
+
+    + Body
+
+            id=commodo%20officia%20magna%20nulla&name=deserunt%20incididunt%20ex
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/authorization/post
+
+#### 岗位授权 [POST]
+
+岗位授权
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + post_id (required) - 岗位id
+        + action_ids (required) - 操作id
+
+    + Body
+
+            post_id=deserunt%20dolore%20labore%20aliquip%20eiusmod&action_ids=pariatur
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/authorization/user
+
+#### 用户授权 [POST]
+
+用户授权
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + user_ids (required) - 用户id
+        + post_ids (required) - 岗位id
+        + project_ids (required) - 项目名称
+
+    + Body
+
+            user_ids=id%20consectetur%20sed%20minim%20cillum&post_ids=occaecat%20reprehenderit&project_ids=Duis%20consectetur%20consequat%20aute
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/permission/list
+
+#### 授权操作列表 [POST]
+
+授权操作列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+#### 授权操作列表 [GET]
+
+授权操作列表
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/permission/post/{post_id}
+
+#### 岗位分配的操作 [GET]
+
+岗位分配的操作
+
++ Parameters
+
+    + post_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/permission/user/{user_id}
+
+#### 用户分配的权限 [GET]
+
+用户分配的权限
+
++ Parameters
+
+    + user_id (required)
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+### /api/admin/users
+
+#### 添加用户记录. body为json对象 {properties: {field: xxx, field2: xxx}}} [POST]
+
+添加用户记录. body为json对象 {properties: {field: xxx, field2: xxx}}}
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + properties (required) - 字段json对象
+
+    + Body
+
+            properties=nostrud
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+
+## Group AdminUser
+
+### /api/admin/user/update-status
+
+#### 更新用户状态 [POST]
+
+更新用户状态
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + userIds (required) - 用户id,支持多个.eg: 1xx,2xx
+        + status (required) - 用户状态:在职, 已离职, 已禁用, 已过期, 已锁定
+
+    + Body
+
+            userIds=voluptate%20nulla%20quis%20Duis&status=tempor
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+
+### /api/admin/user/reset-password
+
+#### 重置密码 [POST]
+
+重置密码
+
++ Request (application/x-www-form-urlencoded)
+
+    + Attributes
+
+        + userId (required) - 用户id
+
+    + Body
+
+            userId=est%20nisi
+
++ Response 200
+
+    + Body
+
+    + Schema
+
+            {
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
