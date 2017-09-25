@@ -217,7 +217,7 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
                   // 组装成string，default改成了, ['ARRAYOBJECT',后面迭代的子元素字符串] ， ['OBJECTTYPE',后面迭代的子元素字符串]
                   if(Object.prototype.toString.call(objAnalysis[obj].default)==="[object Array]") {
                     let defaultVal = objAnalysis[obj].default[0]
-                    if (defaultVal.indexOf('OBJECT')!=-1 &&  defaultVal.indexOf('ARRAY')!=-1) {
+                    if (defaultVal.indexOf('ARRAYOBJECT')!=-1) {
                         paramType = "array(object)"
                     }
                     else if (defaultVal.indexOf('OBJECTTYPE')!=-1) {
