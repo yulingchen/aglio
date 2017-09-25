@@ -211,6 +211,27 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
                  paramType = "array(object)"
               }
              }
+             else if(objAnalysis[obj].type=== 'string'){ 
+
+                  // swaager检验的时候嵌套多层的失败了，所有组装成了string,这里，解析另外处理下，
+                  // 组装成string，default改成了, ['ARRAYOBJECT',后面迭代的子元素字符串] ， ['OBJECTTYPE',后面迭代的子元素字符串]
+                  if(Object.prototype.toString.call(objAnalysis[obj].default)==="[object Array]") {
+                    let defaultVal = objAnalysis[obj].default[0]
+                    if (defaultVal.indexOf('OBJECT')!=-1 &&  defaultVal.indexOf('ARRAY')!=-1) {
+                        paramType = "array(object)"
+                    }
+                    else if (defaultVal.indexOf('OBJECTTYPE')!=-1) {
+                        paramType = "object"
+                    }
+                    else {
+                        paramType = "string"
+                    }
+                  }
+                  else {
+                      paramType = "string"
+                  }
+                  
+             }
              else {
               paramType = objAnalysis[obj].type
              }
@@ -260,9 +281,50 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
                   }else{
                       objParse(objAnalysis[obj].items.properties,i+1,firstParentObj,paramId,arrSave,i+1);
                   }
-             
 
-              }else{
+              }
+
+              else if (objAnalysis[obj].type=== 'string' && Object.prototype.toString.call(objAnalysis[obj].default)==="[object Array]") {
+
+                      var defaultParamsResponses = {
+                            name:obj,          // 数据的变量名称
+                            type: paramType,       // 数据的类型
+                            required: objAnalysis[obj].required ? objAnalysis[obj].required :false,    // 是否必填
+                            description: objAnalysis[obj].description ? objAnalysis[obj].description :null, // 数据的描述
+                            // default: objAnalysis[obj].default ? objAnalysis[obj].default :null,     // 默认值
+                            extend: true,  // 是否可以扩展(是否可以有子属性)
+                            isfold: true,          // 是否已经展开，前提条件可以扩展，默认true
+                            level: i,        // 属于哪个层级，不同的层级间距，颜色不一致
+                            index:  paramId,     // 每一行都有自己的下标
+                            indexArr: parentid?parentid:null,  // 每一行所属的父级的下标
+                            isShow: true ,  // 自身这一行是否显示
+
+                      }
+                      // 添加required属性,第一层级
+                      if(firstParentObj.required&&firstParentObj.required.length&&i==0){
+                        if(firstParentObj.required.join('').indexOf(obj) !== -1){
+                          defaultParamsResponses.required = true
+                        }
+                      }
+                      var arrSave = defaultParamsResponses.required
+                      // 本身required是个数组，应该是找这个的子级,自己为false
+                      if(defaultParamsResponses.required&&defaultParamsResponses.required.length){
+                        defaultParamsResponses.required = false
+                      }
+                       // 添加required属性,其他层级
+                      if(arr&&arr.length&&i==otherI){
+                        if(arr.join('').indexOf(obj) !== -1){
+                          defaultParamsResponses.required = true
+                        }
+                      }
+
+                      result.push(defaultParamsResponses);
+
+                      if(objAnalysis[obj].default[1]){
+                        objParse(JSON.parse(objAnalysis[obj].default[1]),i+1,firstParentObj,paramId,arrSave,i+1);
+                      }
+              }
+              else{
 
                       var defaultParamsResponsesnoson = {
                             name:obj,          // 数据的变量名称
@@ -349,7 +411,8 @@ function init() {
     var arr = Array.prototype.slice.call(document.querySelectorAll('.schema-container'))
     arr.map(function(item){
      
-      // console.log('json',JSON.parse(item.innerHTML))
+      console.log('json',JSON.parse(item.innerHTML))
+
       result = [];
       var obj = JSON.parse(item.innerHTML);
       if(obj.properties){
@@ -379,7 +442,7 @@ function init() {
         item.innerHTML =  '';
       }
       
-      // console.log('result',result,divContainer)
+      console.log('result',result,divContainer)
     })
 
     // 左边导航，瞄点的位置的调整,不用瞄点实现了
