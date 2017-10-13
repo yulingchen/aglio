@@ -216,7 +216,7 @@ function objParse(test,i,firstParentObj,parentid,arr,otherI){
                   // swaager检验的时候嵌套多层的失败了，所有组装成了string,这里，解析另外处理下，
                   // 组装成string，default改成了, ['ARRAYOBJECT',后面迭代的子元素字符串] ， ['OBJECTTYPE',后面迭代的子元素字符串]
                   if(Object.prototype.toString.call(objAnalysis[obj].default)==="[object Array]") {
-                    let defaultVal = objAnalysis[obj].default[0]
+                    var defaultVal = objAnalysis[obj].default[0]
                     if (defaultVal.indexOf('ARRAYOBJECT')!=-1) {
                         paramType = "array(object)"
                     }
